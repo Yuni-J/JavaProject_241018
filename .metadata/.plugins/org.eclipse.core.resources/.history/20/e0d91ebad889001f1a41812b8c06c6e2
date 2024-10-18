@@ -1,0 +1,22 @@
+package day10;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+
+public class File05 {
+
+	public static void main(String[] args) {
+		// test.txt 파일을 읽여들여 map에 저장
+		// 명단, 합계, 평균 출력
+		// 읽어 들이는 파일은 모두 String
+		// 계산을 위해서는 int 로 변환이 필요
+		// Integer.parseInt();
+		// 80점 이상인 학생 명단
+		
+		BufferedReader br = new BufferedReader(new FileReader("test.txt"));
+		
+		
+
+	}
+
+}

@@ -1,0 +1,40 @@
+package day11;
+
+class Counter{
+	// 싱글톤으로 생성
+	private int count;
+	
+	// count가 하나 올라가는 메서드 생성 countMethod()
+	public void countMethod() {
+		count++;
+	}
+
+	public int getCount() {
+		return count;
+	}
+
+	public void setCount(int count) {
+		this.count = count;
+	}
+	
+}
+public class Singeton02 {
+
+	public static void main(String[] args) {
+		// Counter 객체를 2개 생성하여 각각 countMethod() 호출
+		// 1개의 객체가 공유되기 때문에 1개의 변수만 변화
+		
+		Counter c = new Counter();
+		Counter c1 = new Counter();
+		
+		c.countMethod();
+		c.countMethod();
+		System.out.println("cCounter : "+c.getCount());	
+
+		c1.countMethod();
+		c1.countMethod();
+		System.out.println("c1Counter : "+c1.getCount());
+
+	}
+
+}

@@ -1,0 +1,110 @@
+package word_1014;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+public class WordController {
+	List<Word> word = new ArrayList<>();
+	
+	private int wordId;
+	private int meanId;
+
+	public void insertWord(Scanner scan) {
+		// 1.단어등록
+		System.out.println("등록할 단어를 입력하시오");
+		System.out.println("단어 > ");
+		String name = scan.next();
+		scan.nextLine();
+		
+		WordList meanList = new WordList(meanId);
+		String mean;
+		
+		while(true) {
+			System.out.println("의미 > ");
+			mean = scan.nextLine();
+			if(mean == "end") {
+				break;
+			}
+			meanList.add(mean);
+		}
+	
+		wordId++;
+		word.add(new Word(wordId, name, meanings));
+		
+		System.out.println("단어가 등록되었습니다.");
+		System.out.println();
+	}
+
+
+	public void searchWord(Scanner scan) {
+		// 2.단어검색
+		System.out.println("검색할 단어를 입력하시오");
+		System.out.println("단어 > ");
+		String name = scan.next();
+		
+		for(Word w : word) {
+			if(w.getName().equals(name)) {
+				System.out.println("--"+name+"--");
+				System.out.println(w.getMean());
+				System.out.println("------------");
+				return;
+			} 
+		} 
+		System.out.println("검색 결과가 없습니다.");
+		System.out.println();
+	}
+
+	public void modifyWord(Scanner scan) {
+		// 3.단어수정
+		System.out.println("수정할 단어를 입력하시오");
+		System.out.println("단어 > ");
+		String name = scan.next();
+		
+		for(Word w : word) {
+			if(w.getName().equals(name)) {
+				System.out.println("수정할 내용을 작성하시오");
+				String modifyMean = scan.nextLine();
+				w.setMean(modifyMean);
+				System.out.println("단어가 수정되었습니다.");
+			}
+		}
+		System.out.println();
+	}
+
+	public void printWord() {
+		// 4.단어출력
+		System.out.println("--Word--");
+		for(Word w : word) {
+			System.out.println(w);
+		}
+		System.out.println("--------");
+		
+		System.out.println();	
+	}
+
+	public void deleteWord(Scanner scan) {
+		// 5.단어삭제
+		System.out.println("삭제할 단어를 입력하시오");
+		System.out.println("단어 > ");
+		String name = scan.next();
+		
+		for(Word w : word) {
+			if(w.getName().equals(name)) {
+				word.remove(w);
+				System.out.println("삭제가 되었습니다.");
+				return;
+			}
+		}
+		System.out.println("검색 결과가 없습니다.");
+		System.out.println();		
+	}
+
+	public void wordTextFile() {
+		// 6.단어파일로 출력
+		
+		
+		System.out.println();	
+	}
+
+}

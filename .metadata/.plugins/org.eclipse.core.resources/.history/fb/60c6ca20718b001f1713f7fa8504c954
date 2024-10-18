@@ -1,0 +1,48 @@
+package jdbcStudent;
+
+import java.util.Scanner;
+
+public class StudentController {
+	/* Controller <-> Service <-> DAO <-> DB : 기본 클래스의 구조
+	 * Controller 모든 메뉴 분기처리
+	 * */
+	
+	private Scanner scan;
+	private Service svc;
+	private boolean flag;
+	
+	public StudentController() {
+		scan = new Scanner(System.in);
+		svc = new StudentServiceImpl();
+		flag = true;
+		printMenu();
+	}
+
+	private void printMenu() {
+		while(flag) {
+			System.out.println();
+			System.out.println("--학생 관리 프로그램--");
+			System.out.println("1.학생등록|2.학생리스트|3.학생검색(내정보보기)|\r\n"
+					+ "4.내정보수정|5.학생삭제|6.종료");
+			System.out.println("menu > ");
+			int menu = scan.nextInt();
+			
+			switch(menu) {
+			case 1: register(); break;
+			case 2: list(); break;
+			case 3: search(); break;
+			case 4: modify(); break;
+			case 5: delete(); break;
+			case 6: flag = false;
+				System.out.println("종료!!");
+				break;
+			default: System.out.println("잘못된 메뉴입니다.");
+			}
+			
+		}
+		
+	}
+	
+	
+
+}

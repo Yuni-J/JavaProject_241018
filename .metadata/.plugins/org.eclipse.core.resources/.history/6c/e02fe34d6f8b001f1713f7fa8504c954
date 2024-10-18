@@ -1,0 +1,52 @@
+package jdbcStudent;
+
+public class Student {
+	
+	private int sno;  
+	private String sname;  //이름
+	private String snum;  //학번
+	private String sbirth;  //생년월일
+	private String sphone;  //전화번호
+	private String saddr;  //주소
+	private String regdate;  //등록일
+	
+	public Student() {}
+	
+	//학생 등록
+	public Student(String sname, String snum, String sbirth, String sphone,String saddr) {
+		this.sname = sname;
+		this.snum = snum;
+		this.sbirth = sbirth;
+		this.sphone = sphone;
+		this.saddr = saddr;
+	}
+	
+	//학생 리스트
+	public Student(String sname, String snum) {
+		this(sname, snum, "unknown", "unknown", "unknown");
+	}
+	
+	//내정보 보기
+	
+	//내정보 수정
+	
+	//학생 삭제
+	
+//	1.학생등록|2.학생리스트|3.학생검색(내정보보기)|
+//	4.내정보수정|5.학생삭제|6.종료
+	
+	
+	@Override
+	public String toString() {
+		return "Student [sno=" + sno + ", sname=" + sname + ", snum=" + snum + ", sbirth=" + sbirth + ", sphone="
+				+ sphone + ", saddr=" + saddr + ", regdate=" + regdate + "]";
+	}
+	
+	public void print() {
+		System.out.println("___________________");
+		System.out.println("| "+snum+"("+sname+") |");
+		System.out.println("___________________");
+	}
+	
+	
+}

@@ -1,0 +1,28 @@
+package jdbcStudent;
+
+import java.util.Scanner;
+
+public class StudentController {
+	/* Controller <-> Service <-> DAO <-> DB : 기본 클래스의 구조
+	 * Controller 모든 메뉴 분기처리
+	 * */
+	
+	private Scanner scan;
+	private Service svc;
+	private boolean flag;
+	
+	public StudentController() {
+		scan = new Scanner(System.in);
+		svc = new StudentServiceImpl();
+		flag = true;
+		printMenu();
+	}
+
+	private void printMenu() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
+
+}

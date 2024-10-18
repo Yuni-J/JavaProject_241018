@@ -1,0 +1,19 @@
+package day09;
+
+public class Stream03 {
+
+	public static void main(String[] args) {
+		/* Student 클래스로 리스트 구성
+		 * Student 이름, 점수만 가지는 클래스
+		 * 
+		 * 학생 5명을 추가하고, 콘솔에 출력
+		 * 홍길동 : 80
+		 * */ 
+		
+		
+		
+		
+
+	}
+
+}

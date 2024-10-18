@@ -1,0 +1,29 @@
+package jdbcStudent;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+
+public class StudentDAOImpl implements DAO {
+	/* DAO <-> DB */
+	
+	private Connection conn;  // DB 연결객체
+	private PreparedStatement pst;  // sql 구문 실행시키는 기능을 가진 객체
+	private String query = "";  // 쿼리문 저장 스트링
+	
+	public StudentDAOImpl() {
+		// DBConnection class 생성(싱글톤) 연결
+		DatabaseConnection dbc = DatabaseConnection.getDbc();
+		conn = dbc.getConn();
+	}
+	
+	// sql 처리
+	@Override
+	public int insert(Student s) {
+		// student 객체를 등록하고, isOk를 리턴
+		System.out.println("insert DAOImpl success!!");
+		query = "insert into student(sname, snum, sbirth, sphone, saddr";
+		
+		return 0;
+	}
+
+}

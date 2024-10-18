@@ -1,0 +1,7 @@
+package jdbcStudent;
+
+public interface DAO {
+
+	int insert(Student s);
+
+}

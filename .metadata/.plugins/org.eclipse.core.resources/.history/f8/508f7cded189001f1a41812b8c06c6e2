@@ -1,0 +1,19 @@
+package day10;
+
+import java.io.FileWriter;
+import java.io.IOException;
+
+public class File03 {
+
+	public static void main(String[] args) throws IOException {
+		// FileWriter를 통해 파일 쓰기
+		
+		FileWriter fw = new FileWriter("writer.txt"); //try~catch도 가능 throws도 가능
+		for(int i=1; i<10; i++) {
+			// \r = 캐리지리턴, \n = enter
+			String data = i+" test \r\n";
+		}
+
+	}
+
+}

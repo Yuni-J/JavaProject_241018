@@ -1,0 +1,24 @@
+package monopoly;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class HotelList {
+	
+	
+	Map<Integer, Hotel> m = new HashMap<>();
+	
+	Hotel h = new Hotel(int price, int toll);
+	
+	public void addHotel(Integer hotelPo, Hotel hotel) {
+		m.put(h.setHotelPo(1), hotel);
+	}
+	
+	
+	public void hotelListPrint() {
+		
+	}
+
+	
+	
+}

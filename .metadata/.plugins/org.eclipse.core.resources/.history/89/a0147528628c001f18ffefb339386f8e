@@ -1,0 +1,50 @@
+package monopoly;
+
+public class GoldKey {
+	//(맴버변수) - gkId, content 
+	
+	private int gkId;  //황금열쇠 id
+	private String content;  //황금열쇠 내용
+	
+	//생성자
+	public GoldKey() {}
+	public GoldKey(int gkId, String content) {
+		this.gkId = gkId;
+		this.content = content;
+	}
+
+	@Override
+	public String toString() {
+	    // Adjust the width of the content field to fit within the card
+	    String formattedContent = String.format("%-46s", content); // 46 characters to fit nicely
+
+	    return String.format(
+	        " ┌──────────────────────────────────────────────────────┐\n" +
+	        " │ %-12s  %-10s  %-10s  %-12s  %-10s │\n" +
+	        " │ %-1s  %-9s  %-9s %-12s  %-8s  │\n" +
+	        " │ %-9s  %-12s  %-12s  %-8s  %-12s  │\n" +
+	        " │ %-12s  %-10s  %-10s  %-12s  %-10s  │\n" +
+	        " │ %-46s │\n" + // Add the content line here
+	        " └──────────────────────────────────────────────────────┘",
+	        " ", " ", " ", " ", " ",
+	        gkId, " ", " ", " ", " ",
+	        " ", " ", " ", " ", " ",
+	        " ", " ", " ", " ", " ",
+	        formattedContent
+	    );
+	}
+	public int getGkId() {
+		return gkId;
+	}
+	public void setGkId(int gkId) {
+		this.gkId = gkId;
+	}
+	public String getContent() {
+		return content;
+	}
+	public void setContent(String content) {
+		this.content = content;
+	}
+}
+
+

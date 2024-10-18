@@ -1,0 +1,18 @@
+package jdbcStudent;
+
+public class StudentServiceImpl implements Service {
+	/* service <-> DAO */
+	// 생성자로 DAO 객체와 연결
+	private DAO dao;  //interface
+	
+	public StudentServiceImpl(){
+		dao = new StudentDAOImpl();  //DAO 구현체
+	}
+
+	@Override
+	public int insert(Student s) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+}

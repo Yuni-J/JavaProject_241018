@@ -1,0 +1,48 @@
+package word_1014;
+
+import java.util.Objects;
+
+public class Word {
+	private String name;
+	private String mean;
+	
+	public Word() {}
+	public Word(String name, String mean) {
+		this.name = name;
+		this.mean = mean;
+	}
+
+	@Override
+	public String toString() {
+		return name+"\r\n"+ ": "+mean ;
+	}
+	
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getMean() {
+		return mean;
+	}
+	public void setMean(String mean) {
+		this.mean = mean;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(mean, name);
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Word other = (Word) obj;
+		return Objects.equals(mean, other.mean) && Objects.equals(name, other.name);
+	}
+}

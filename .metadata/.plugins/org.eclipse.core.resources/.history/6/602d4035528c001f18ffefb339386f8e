@@ -1,0 +1,42 @@
+package monopoly;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class HotelList {
+	private int hotelPo;
+	
+	Map<Integer, Hotel> m = new HashMap<>();
+	
+	Hotel h = new Hotel();
+	
+//	public void addHotel() {
+////		m.put(hotelPo, hotel);
+//	}
+	public HotelList() {
+		m.put(1, new Hotel(20,5));
+		m.put(3, new Hotel(24,7));
+		m.put(4, new Hotel(29,8));
+		m.put(6, new Hotel(33,9));
+		m.put(8, new Hotel(37,11));
+		m.put(10, new Hotel(43,13));
+		m.put(11, new Hotel(48,14));
+		m.put(13, new Hotel(54,16));
+		m.put(15, new Hotel(61,18));
+		m.put(16, new Hotel(67,19));
+		m.put(17, new Hotel(73,20));
+	}
+	
+	public void hotelListPrint() {
+		for(Map.Entry<Integer, Hotel> entry : m.entrySet()) {
+			System.out.println("호텔 위치 : " + entry.getKey()+entry.getValue());
+			System.out.println();
+		}
+	}
+
+	
+	
+
+	
+	
+}

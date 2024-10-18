@@ -1,0 +1,17 @@
+package day10;
+
+import java.io.File;
+
+public class File06 {
+
+	public static void main(String[] args) {
+		// File 객체 : 경로 + 확장자
+		// D:\yuni_240725\java_workspace\java_project\test.txt
+		// 파일 생성
+		
+		File f = new File();
+		
+
+	}
+
+}

@@ -1,0 +1,1465 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+#include <windows.h>
+
+#define _CRT_SECURE_NO_WARNINGS
+
+#define ROWS 48                  //게임판의 행 픽셀 크기
+#define COLS 112                 //게임판의 열 픽셀 크기
+
+#define BOARD_LAND 28           //게임판의 땅 개수
+
+#define BLACK 0  	
+#define darkBLUE 1	            //색에 해당하는 인덱스
+#define DarkGreen 2
+#define darkSkyBlue 3    
+#define DarkRed 4	
+#define DarkPurple 5	
+#define DarkYellow 6	
+#define GRAY 7	
+#define DarkGray 8	
+#define BLUE 9	
+#define GREEN 10		
+#define SkyBlue 11	
+#define RED 12	
+#define PURPLE 13	
+#define YELLOW 14		
+#define WHITE 15
+
+
+int Dice(void) {                 //주사위 함수
+
+	return rand() % 6 + 1;
+}
+
+void textcolor(int colorNum) {       //글자에 색을 입히는 함수
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), colorNum);
+}
+
+void gotoXY(int x, int y) {                 //선택한 좌표로 이동하는 함수
+	COORD pos;
+	pos.X = x;
+	pos.Y = y;
+	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
+}
+
+void create_board(void) {         //게임판을 화면에 출력하는 함수
+	int i, j;
+	printf("┌");
+	for (i = 1; i < COLS; i++) {           
+		if (i % 14 == 0)
+			printf("┬");
+		else
+			printf("─");
+	}
+	printf("┐\n");
+	printf("│             │    스위스   │   네덜란드  │             │     독일    │   포루투갈  │    스페인   │             │\n");
+	printf("│ 사회복지기금│   (43만원)  │   (48만원)  │   §찬스§  │   (52만원)  │   (56만원)  │   (60만원)  │ ★우주여행★│\n");
+	for (j = 0; j < 2; j++) {
+		printf("│");
+		for (i = 1; i < COLS; i++) {
+			if (i % 14 == 0)
+				printf("│");
+			else
+				printf(" ");	    //1행
+		}
+		printf("│\n");
+	}
+	printf("├");
+	for (i = 1; i < COLS; i++) {
+		if (i == 14 || i == 98)
+			printf("┼");
+		else if (i % 14 == 0)
+			printf("┴");
+		else
+			printf("─");
+	}
+	printf("┤\n");
+
+
+	printf("│    캐나다   │");
+	for (i = 16; i <= 98; i++) {
+		printf(" ");
+	}
+	printf("│     영국    │\n");
+	printf("│   (40만원)  │");
+	for (i = 16; i <= 98; i++) {
+		printf(" ");
+	}
+	printf("│   (64만원)  │\n");          //2행
+
+	for (j = 0; j < 2; j++) {
+		printf("│             │");
+		for (i = 16; i <= 98; i++) {
+			printf(" ");
+		}
+		printf("│             │\n");
+	}
+	printf("├─────────────┤");
+	for (i = 16; i <= 98; i++) {
+		printf(" ");
+	}
+	printf("├─────────────┤\n");
+
+
+	printf("│     미국    │");
+	for (i = 16; i <= 98; i++) {
+		printf(" ");
+	}
+	printf("│   이탈리아  │\n");
+	printf("│   (36만원)  │");
+	for (i = 16; i <= 98; i++) {
+		printf(" ");
+	}
+	printf("│   (68만원)  │\n");         //3행
+	for (j = 0; j < 2; j++) {
+		printf("│             │");
+		for (i = 16; i <= 98; i++) {
+			printf(" ");
+		}
+		printf("│             │\n");
+	}
+	printf("├─────────────┤");
+	for (i = 16; i <= 98; i++) {
+		printf(" ");
+	}
+	printf("├─────────────┤\n");
+
+
+	printf("│    브라질   │");
+	for (i = 16; i <= 98; i++) {
+		printf(" ");
+	}
+	printf("│             │\n");
+	printf("│   (32만원)  │");
+	for (i = 16; i <= 98; i++) {
+		printf(" ");
+	}
+	printf("│   §찬스§  │\n");              //4행
+	for (j = 0; j < 2; j++) {
+		printf("│             │");
+		for (i = 16; i <= 98; i++) {
+			printf(" ");
+		}
+		printf("│             │\n");
+	}
+	printf("├─────────────┤");
+	for (i = 16; i <= 98; i++) {
+		printf(" ");
+	}
+	printf("├─────────────┤\n");
+
+
+	printf("│             │");
+	for (i = 16; i <= 98; i++) {
+		printf(" ");
+	}
+	printf("│     일본    │\n");
+	printf("│   §찬스§  │");
+	for (i = 16; i <= 98; i++) {
+		printf(" ");
+	}
+	printf("│   (72만원)  │\n");         //5행
+	for (j = 0; j < 2; j++) {
+		printf("│             │");
+		for (i = 16; i <= 98; i++) {
+			printf(" ");
+		}
+		printf("│             │\n");
+	}
+	printf("├─────────────┤");
+	for (i = 16; i <= 98; i++) {
+		printf(" ");
+	}
+	printf("├─────────────┤\n");
+
+
+	printf("│  아르헨티나 │");
+	for (i = 16; i <= 98; i++) {
+		printf(" ");
+	}
+	printf("│ 사회복지기금│\n");
+	printf("│   (28만원)  │");
+	for (i = 16; i <= 98; i++) {
+		printf(" ");
+	}
+	printf("│(15만원 기부)│\n");              //6행
+	for (j = 0; j < 2; j++) {
+		printf("│             │");
+		for (i = 16; i <= 98; i++) {
+			printf(" ");
+		}
+		printf("│             │\n");
+	}
+	printf("├─────────────┤");
+	for (i = 16; i <= 98; i++) {
+		printf(" ");
+	}
+	printf("├─────────────┤\n");
+
+
+	printf("│     칠레    │");
+	for (i = 16; i <= 98; i++) {
+		printf(" ");
+	}
+	printf("│   대한민국  │\n");
+	printf("│   (23만원)  │");
+	for (i = 16; i <= 98; i++) {
+		printf(" ");
+	}
+	printf("│   (80만원)  │\n");               //7행
+	for (j = 0; j < 2; j++) {
+		printf("│             │");
+		for (i = 16; i <= 98; i++) {
+			printf(" ");
+		}
+		printf("│             │\n");
+	}
+	printf("├─────────────┼");
+
+	for (i = 16; i <= 98; i++) {
+		if (i % 14 == 1)
+			printf("┬");
+		else
+			printf("─");
+	}
+	printf("┼─────────────┤\n");
+
+
+	printf("│  ☆무인도☆ │  인도네시아 │     대만    │   싱가포르  │             │    베트남   │    필리핀   │    ←시작   │\n");
+	printf("│             │   (20만원)  │   (18만원)  │   (15만원)  │   §찬스§  │   (12만원)  │   (10만원)  │             │\n");
+	for (j = 0; j < 2; j++) {
+		printf("│");
+		for (i = 1; i < COLS; i++) {             //8행
+			if (i % 14 == 0)
+				printf("│");
+			else
+				printf(" ");
+		}
+		printf("│\n");
+	}
+	printf("└");
+	for (i = 1; i < COLS; i++) {
+		if (i % 14 == 0) {
+			printf("┴");
+		}
+		else {
+			printf("─");
+		}
+	}
+	printf("┘\n");
+
+
+}
+
+typedef struct player_info {                                //플레이어의 정보 구조체
+	char name[30];
+	int money;                          //보유금액
+	int pos_index;                      //현재위치 인덱스
+	int color;                          //색 인덱스
+	int land;                           //보유중인 땅의 개수
+	int island_count;                   //무인도에 갇혔는지 판단 (1이상이면 무인도)
+	int double_count;                   //더블이 나왔는지 판단  (1이면 더블)
+}player_info;
+
+
+typedef struct city_info {                                     //땅의 정보 구조체
+	char name[30];                     //땅의 이름
+	int expense;                       //땅의 구매 비용
+
+	int name_coord_x;                  //땅의 이름이 출력되는 x좌표
+	int name_coord_y;                  //땅의 이름이 출력되는 y좌표
+
+	int player1_coord_x;               //플레이어1의 말이 출력되는 x좌표
+	int player1_coord_y;               //플레이어1의 말이 출력되는 y좌표
+	int player2_coord_x;               //플레이어2의 말이 출력되는 x좌표
+	int player2_coord_y;               //플레이어2의 말이 출력되는 y좌표
+
+	int building1_coord_x;             //건물1이 출력되는 x좌표
+	int building1_coord_y;             //건물1이 출력되는 y좌표
+	int building2_coord_x;             //건물2이 출력되는 x좌표
+	int building2_coord_y;             //건물2이 출력되는 y좌표
+	int building3_coord_x;             //건물3이 출력되는 x좌표
+	int building3_coord_y;             //건물3이 출력되는 y좌표
+
+	int land_own;                   //땅의 소유주가 누구인지 판단 (-1이면 소유주가 없는 땅)
+	int building_ev;                //땅에 건설된 건물 개수
+}city_info;
+
+void init_player_info(player_info* p, int color_index) {          //플레이어 정보를 초기화하는 함수
+	p->money = 500;                      //시작금액 500만원으로 초기화
+	p->pos_index = 0;
+	p->color = color_index;
+	p->land = 0;
+	p->island_count = 0;
+	p->double_count = 0;
+}
+
+void init_city_info(city_info* c, int ncx, int ncy, int p1cx, int p1cy, int b1cx, int b1cy, int expense) {
+	c->name_coord_x = ncx;
+	c->name_coord_y = ncy;
+
+	c->expense = expense;
+
+	c->player1_coord_x = p1cx;                  //땅의 정보를 초기화하는 함수
+	c->player1_coord_y = p1cy;
+	c->player2_coord_x = p1cx + 3;
+	c->player2_coord_y = p1cy;
+
+	c->building1_coord_x = b1cx - 1;
+	c->building1_coord_y = b1cy;
+	c->building2_coord_x = b1cx + 2;
+	c->building2_coord_y = b1cy;
+	c->building3_coord_x = b1cx + 5;
+	c->building3_coord_y = b1cy;
+
+	c->land_own = -1;
+	c->building_ev = 0;
+}
+
+
+
+void print_shape_dice(int n, int x, int y) {            //주사위 모양을 출력하는 함수
+	switch (n) {
+	case 1:
+		gotoXY(x, y); printf("┌───────────────┐");
+		gotoXY(x, y + 1); printf("│               │");
+		gotoXY(x, y + 2); printf("│               │");
+		gotoXY(x, y + 3); printf("│               │");
+		gotoXY(x, y + 4); printf("│       ●      │");
+		gotoXY(x, y + 5); printf("│               │");
+		gotoXY(x, y + 6); printf("│               │");
+		gotoXY(x, y + 7); printf("│               │");
+		gotoXY(x, y + 8); printf("└───────────────┘");
+		break;
+
+	case 2:
+		gotoXY(x, y); printf("┌───────────────┐");
+		gotoXY(x, y + 1); printf("│               │");
+		gotoXY(x, y + 2); printf("│               │");
+		gotoXY(x, y + 3); printf("│               │");
+		gotoXY(x, y + 4); printf("│    ●   ●    │");
+		gotoXY(x, y + 5); printf("│               │");
+		gotoXY(x, y + 6); printf("│               │");
+		gotoXY(x, y + 7); printf("│               │");
+		gotoXY(x, y + 8); printf("└───────────────┘");
+		break;
+
+	case 3:
+		gotoXY(x, y); printf("┌───────────────┐");
+		gotoXY(x, y + 1); printf("│               │");
+		gotoXY(x, y + 2); printf("│          ●   │");
+		gotoXY(x, y + 3); printf("│               │");
+		gotoXY(x, y + 4); printf("│       ●      │");
+		gotoXY(x, y + 5); printf("│               │");
+		gotoXY(x, y + 6); printf("│    ●         │");
+		gotoXY(x, y + 7); printf("│               │");
+		gotoXY(x, y + 8); printf("└───────────────┘");
+		break;
+
+	case 4:
+		gotoXY(x, y); printf("┌───────────────┐");
+		gotoXY(x, y + 1); printf("│               │");
+		gotoXY(x, y + 2); printf("│    ●   ●    │");
+		gotoXY(x, y + 3); printf("│               │");
+		gotoXY(x, y + 4); printf("│               │");
+		gotoXY(x, y + 5); printf("│               │");
+		gotoXY(x, y + 6); printf("│    ●   ●    │");
+		gotoXY(x, y + 7); printf("│               │");
+		gotoXY(x, y + 8); printf("└───────────────┘");
+		break;
+
+	case 5:
+		gotoXY(x, y); printf("┌───────────────┐");
+		gotoXY(x, y + 1); printf("│               │");
+		gotoXY(x, y + 2); printf("│    ●    ●   │");
+		gotoXY(x, y + 3); printf("│               │");
+		gotoXY(x, y + 4); printf("│       ●      │");
+		gotoXY(x, y + 5); printf("│               │");
+		gotoXY(x, y + 6); printf("│    ●    ●   │");
+		gotoXY(x, y + 7); printf("│               │");
+		gotoXY(x, y + 8); printf("└───────────────┘");
+		break;
+
+	default:
+		gotoXY(x, y); printf("┌───────────────┐");
+		gotoXY(x, y + 1); printf("│               │");
+		gotoXY(x, y + 2); printf("│    ●   ●    │");
+		gotoXY(x, y + 3); printf("│               │");
+		gotoXY(x, y + 4); printf("│    ●   ●    │");
+		gotoXY(x, y + 5); printf("│               │");
+		gotoXY(x, y + 6); printf("│    ●   ●    │");
+		gotoXY(x, y + 7); printf("│               │");
+		gotoXY(x, y + 8); printf("└───────────────┘");
+		break;
+	}
+}
+ 
+int is_double(int x, int y) {               //더블인지 판단하는 함수
+	if (x == y)
+		return 1;                   //더블이면 1 반환
+	else
+		return 0;                   //그렇지 않으면 0 반환
+}
+
+void clear(int x, int y) {                   //좌표로부터 40행을 지우는 함수
+
+	for (int i = 0; i < 40; i++) {
+
+		gotoXY(x, y);
+		printf("                                           ");
+		y++;
+	}
+
+}
+
+void print_money(player_info* a, player_info* b, int x, int y) {       //플레이어의 보유금액을 화면에 출력하는 함수
+	gotoXY(x, y);
+	printf("                                ");
+	gotoXY(x, y);
+	textcolor(a->color); printf("%s", a->name); textcolor(WHITE);
+	printf(" 님의 보유금액: %d 만원", a->money);
+
+	gotoXY(x, y + 2);
+	printf("                                ");
+	gotoXY(x, y + 2);
+	textcolor(b->color); printf("%s", b->name); textcolor(WHITE);
+	printf(" 님의 보유금액: %d 만원", b->money);
+
+}
+
+void print_land(player_info* a, player_info* b, int x, int y) {       //플레이어가 보유한 땅 개수를 화면에 출력하는 함수
+	gotoXY(x, y);
+	textcolor(a->color); printf("%s", a->name); textcolor(WHITE);
+	printf(" 님의 땅 개수: %d 개", a->land);
+
+	gotoXY(x, y + 2);
+	textcolor(b->color); printf("%s", b->name); textcolor(WHITE);
+	printf(" 님의 땅 개수: %d 개", b->land);
+}
+
+void print_rank(player_info* winner, player_info* loser, int turn) {    //순위를 출력하는 함수
+	char ftmp[30];
+
+	textcolor(RED);
+	gotoXY(9, 308); printf("┌───────");
+	gotoXY(9, 309); printf("│");
+	gotoXY(9, 310); printf("│");
+	gotoXY(9, 311); printf("│      ──┐");
+	gotoXY(9, 312); printf("│        │ ");
+	gotoXY(9, 313); printf("│        │ ");
+	gotoXY(9, 314); printf("└────    │ ");
+	textcolor(DarkYellow);
+
+	gotoXY(23, 308); printf("┌────────┐");
+	gotoXY(23, 309); printf("│"); gotoXY(32, 309); printf("│");
+	gotoXY(23, 310); printf("│"); gotoXY(32, 310); printf("│");
+	gotoXY(23, 311); printf("├────────┤");
+	gotoXY(23, 312); printf("│"); gotoXY(32, 312); printf("│");
+	gotoXY(23, 313); printf("│"); gotoXY(32, 313); printf("│");
+	gotoXY(23, 314); printf("│"); gotoXY(32, 314); printf("│");
+	textcolor(YELLOW);
+
+	gotoXY(37, 308); printf("┌──┐   ┌──┐");
+	gotoXY(37, 309); printf("│  │   │"); gotoXY(47, 309); printf("│");
+	gotoXY(37, 310); printf("│  │   │"); gotoXY(47, 310); printf("│");
+	gotoXY(37, 311); printf("│  └───┘"); gotoXY(47, 311); printf("│");
+	gotoXY(37, 312); printf("│"); gotoXY(47, 312); printf("│");
+	gotoXY(37, 313); printf("│"); gotoXY(47, 313); printf("│");
+	gotoXY(37, 314); printf("│"); gotoXY(47, 314); printf("│");
+	textcolor(GREEN);
+
+	gotoXY(52, 308); printf("┌────────");
+	gotoXY(52, 309); printf("│");
+	gotoXY(52, 310); printf("│");
+	gotoXY(52, 311); printf("├────────");
+	gotoXY(52, 312); printf("│");
+	gotoXY(52, 313); printf("│");
+	gotoXY(52, 314); printf("└────────");
+	textcolor(SkyBlue);
+
+	gotoXY(72, 308); printf("┌─────────┐");
+	gotoXY(72, 309); printf("│"); gotoXY(82, 309); printf("│");
+	gotoXY(72, 310); printf("│"); gotoXY(82, 310); printf("│");
+	gotoXY(72, 311); printf("│"); gotoXY(82, 311); printf("│");
+	gotoXY(72, 312); printf("│"); gotoXY(82, 312); printf("│");
+	gotoXY(72, 313); printf("│"); gotoXY(82, 313); printf("│");
+	gotoXY(72, 314); printf("└─────────┘");
+	textcolor(BLUE);
+
+	gotoXY(87, 308); printf("│"); gotoXY(98, 308); printf("│");
+	gotoXY(87, 309); printf("│"); gotoXY(98, 309); printf("│");
+	gotoXY(87, 310); printf("│"); gotoXY(98, 310); printf("│");
+	gotoXY(87, 311); printf("└┐"); gotoXY(97, 311); printf("┌┘");
+	gotoXY(87, 312); printf(" └┐"); gotoXY(96, 312); printf("┌┘");
+	gotoXY(87, 313); printf("  └┐"); gotoXY(95, 313); printf("┌┘");
+	gotoXY(87, 314); printf("   └────"); gotoXY(95, 314); printf("┘");
+	textcolor(darkBLUE);
+
+	gotoXY(102, 308); printf("┌────────");
+	gotoXY(102, 309); printf("│");
+	gotoXY(102, 310); printf("│");
+	gotoXY(102, 311); printf("├────────");
+	gotoXY(102, 312); printf("│");
+	gotoXY(102, 313); printf("│");
+	gotoXY(102, 314); printf("└────────");
+	textcolor(PURPLE);
+
+	gotoXY(115, 308); printf("┌───────┐");
+	gotoXY(115, 309); printf("│"); gotoXY(123, 309); printf("│");
+	gotoXY(115, 310); printf("│"); gotoXY(123, 310); printf("│");
+	gotoXY(115, 311); printf("├───────┴─┐");
+	gotoXY(115, 312); printf("│"); gotoXY(125, 312); printf("│");
+	gotoXY(115, 313); printf("│"); gotoXY(125, 313); printf("│");
+	gotoXY(115, 314); printf("│"); gotoXY(125, 314); printf("│");
+	textcolor(WHITE);
+
+
+
+	gotoXY(0, 300);
+	gotoXY(20, 318);
+	printf("============================================================================================");
+	gotoXY(50, 321);
+	textcolor(DarkYellow); printf("***** 순위를 발표합니다!! *****"); textcolor(WHITE);
+	gotoXY(20, 324);
+	printf("============================================================================================");
+
+	gotoXY(69, 326);
+	printf("보유금액");              //플레이어의 보유금액 출력
+	gotoXY(70, 329);
+	printf("%d만원", winner->money);     
+	gotoXY(70, 332);
+	printf("%d만원", loser->money);
+
+	gotoXY(84, 326);
+	printf("보유한 땅");
+	gotoXY(87, 329);
+	printf("%d개", winner->land);         //플레이어가 보유한 땅 개수 출력
+	gotoXY(87, 332);
+	printf("%d개", loser->land);
+	gotoXY(51, 341);
+	textcolor(SkyBlue); printf("%d 턴 동안 게임을 진행하였습니다.", turn / 2 + 1); textcolor(WHITE);   //진행된 턴 수 출력
+
+
+	gotoXY(38, 329);
+	textcolor(YELLOW); printf("★1등★"); textcolor(WHITE);
+	gotoXY(51, 329);
+	textcolor(winner->color); printf("%s ", winner->name); textcolor(WHITE); printf("님");
+
+	gotoXY(40, 332);
+	textcolor(GRAY); printf("2등"); textcolor(WHITE);
+	gotoXY(51, 332);
+	textcolor(loser->color); printf("%s ", loser->name); textcolor(WHITE); printf("님");
+
+	for (int i = 0; i < 15; i++) {
+		gotoXY(46, 328 + i);
+		printf("│");
+	}
+	gotoXY(30, 344);
+	printf("아무 키나 입력하세요 >> ");
+	scanf_s("%s", &ftmp, sizeof(ftmp));            //프로그램 종료
+	exit(0);
+}
+
+void is_bankrupt(player_info* a, player_info* b, int turn) {    //파산한 플레이어가 있는지 판단하는 함수
+	char tmp[30];
+	if (a->money <= 0) {              //만약 a플레이어가 파산한 경우
+		gotoXY(35, 213);
+		textcolor(PURPLE); printf("===================================================="); textcolor(WHITE);
+		gotoXY(35, 215);
+		printf("                                                 ");
+		gotoXY(46, 215);
+		textcolor(a->color); printf("	  %s", a->name); textcolor(WHITE);
+		textcolor(DarkRed); printf("님이 파산하였습니다!"); textcolor(WHITE);
+		gotoXY(45, 217);
+		printf("                                                        ");
+		gotoXY(45, 217);
+		textcolor(YELLOW); printf("    ****※ 게 임 종 료 ※****     "); textcolor(WHITE);
+		gotoXY(35, 219);
+		textcolor(PURPLE); printf("===================================================="); textcolor(WHITE);
+		gotoXY(39, 221);
+		printf("                                      ");
+		gotoXY(39, 221);
+		printf(">> ");
+		scanf_s("%s", &tmp, sizeof(tmp));
+
+		print_rank(b, a, turn);            //순위 출력함수 호출 (승리 : b, 패배 : a)
+	}
+	else if (b->money <= 0) {                 //만약 플레이어 b 가 파산한 경우
+		gotoXY(35, 213);
+		textcolor(PURPLE); printf("===================================================="); textcolor(WHITE);
+		gotoXY(46, 215);
+		textcolor(b->color); printf("	  %s", b->name); textcolor(WHITE);
+		textcolor(DarkRed); printf("님이 파산하였습니다!"); textcolor(WHITE);
+		gotoXY(45, 217);
+		printf("                                                        ");
+		gotoXY(45, 217);
+		textcolor(YELLOW); printf("    ****※ 게 임 종 료 ※****     "); textcolor(WHITE);
+		gotoXY(35, 219);
+		textcolor(PURPLE); printf("===================================================="); textcolor(WHITE);
+		gotoXY(39, 221);
+		printf("                                      ");
+		gotoXY(39, 221);
+		printf(">> ");
+		scanf_s("%s", &tmp, sizeof(tmp));
+
+		print_rank(a, b, turn);             //순위 출력함수 호출 (승리 : a, 패배 : b)
+	}
+}
+int main(void) {
+
+	player_info p[2];              //2명의 플레이어 구조체 생성(배열)
+	city_info c[28];              //28개의 땅 구조체 생성(배열)
+
+	int dice_1;
+	int dice_2;                 
+	int donation = 0;            //사회복지기금 0으로 초기화
+
+	char choice[30];
+
+	srand((unsigned)time(NULL));
+
+	textcolor(BLUE);
+	gotoXY(10, 2);
+	printf(" ■      ■");
+	gotoXY(10, 3);
+	printf(" ■■■■■");
+	gotoXY(10, 4);
+	printf(" ■      ■");
+	gotoXY(10, 5);
+	printf(" ■■■■■");
+	gotoXY(9, 7);
+	printf(" ■■■■■■");
+	gotoXY(10, 8);
+	printf("     ■");
+	gotoXY(10, 9);
+	printf("     ■");
+
+	textcolor(GREEN);
+	gotoXY(25, 2);
+	printf("■■■■■");
+	gotoXY(25, 3);
+	printf("        ■");
+	gotoXY(25, 4);
+	printf("■■■■■");
+	gotoXY(25, 5);
+	printf("■");
+	gotoXY(25, 6);
+	printf("■■■■■");
+	gotoXY(23, 8);
+	printf(" ■■■■■■");
+	gotoXY(23, 9);
+	printf("      ■");
+	gotoXY(23, 10);
+	printf("      ■");
+
+	textcolor(YELLOW);
+	gotoXY(39, 2);
+	printf("          ■");
+	gotoXY(39, 3);
+	printf("■■■■  ■");
+	gotoXY(39, 4);
+	printf("■    ■  ■");
+	gotoXY(39, 5);
+	printf("■    ■  ■■");
+	gotoXY(39, 6);
+	printf("■■■■  ■");
+	gotoXY(39, 7);
+	printf("          ■");
+
+	textcolor(RED);
+	gotoXY(54, 2);
+	printf(" ■    ■");
+	gotoXY(54, 3);
+	printf(" ■■■■");
+	gotoXY(54, 4);
+	printf(" ■    ■");
+	gotoXY(54, 5);
+	printf(" ■■■■");
+	gotoXY(53, 7);
+	printf(" ■■■■■");
+	gotoXY(53, 8);
+	printf("     ■");
+	gotoXY(55, 9);
+	printf("■■■■");
+	gotoXY(55, 10);
+	printf("      ■");
+	gotoXY(55, 11);
+	printf("■■■■");
+	gotoXY(55, 12);
+	printf("■");
+	gotoXY(55, 13);
+	printf("■■■■");
+
+	textcolor(darkBLUE);
+	gotoXY(40, 10);
+	printf("┌───────┐");
+	gotoXY(39, 11);
+	printf("┌┘ game!!└┐");
+	gotoXY(39, 12);
+	printf("└┐       ┌┘");
+	gotoXY(40, 13);
+	printf("└───────┘");
+
+	textcolor(DarkYellow);
+	gotoXY(5, 0);
+	for (int i = 0; i < 66; i++) {
+		textcolor(i % 16);
+		printf("=");
+	}
+	gotoXY(5, 15);
+	for (int i = 66; i > 0; i--) {
+		textcolor(i % 16);
+		printf("=");
+	}
+	textcolor(WHITE);
+
+	gotoXY(7, 16);
+	textcolor(GREEN); printf("전체 화면으로 플레이하세요! (※권장※)"); textcolor(WHITE);
+
+	strcpy_s(c[0].name, sizeof(c[0].name), "←시작");
+	init_city_info(&c[0], 103, 236, 104, 238, 104, 239, 0);        //모든 땅을 초기화
+
+	strcpy_s(c[1].name, sizeof(c[1].name), "필리핀");
+	init_city_info(&c[1], 89, 236, 89, 238, 89, 239, 10);
+
+	strcpy_s(c[2].name, sizeof(c[2].name), "베트남");
+	init_city_info(&c[2], 75, 236, 75, 238, 75, 239, 12);
+
+	strcpy_s(c[3].name, sizeof(c[3].name), "§찬스§");
+	init_city_info(&c[3], 60, 237, 61, 238, 61, 239, 0);
+
+	strcpy_s(c[4].name, sizeof(c[4].name), "싱가포르");
+	init_city_info(&c[4], 46, 236, 47, 238, 47, 239, 15);
+
+	strcpy_s(c[5].name, sizeof(c[5].name), "대만");
+	init_city_info(&c[5], 34, 236, 33, 238, 33, 239, 18);
+
+	strcpy_s(c[6].name, sizeof(c[6].name), "인도네시아");
+	init_city_info(&c[6], 17, 236, 19, 238, 19, 239, 20);
+
+	strcpy_s(c[7].name, sizeof(c[7].name), "☆무인도☆");
+	init_city_info(&c[7], 3, 236, 5, 238, 5, 239, 0);
+
+	strcpy_s(c[8].name, sizeof(c[8].name), "칠레");
+	init_city_info(&c[8], 6, 231, 5, 233, 5, 234, 23);
+
+	strcpy_s(c[9].name, sizeof(c[9].name), "아르헨티나");
+	init_city_info(&c[9], 3, 226, 5, 228, 5, 229, 28);
+
+	strcpy_s(c[10].name, sizeof(c[10].name), "§찬스§");
+	init_city_info(&c[10], 4, 222, 5, 223, 5, 224, 0);
+
+	strcpy_s(c[11].name, sizeof(c[11].name), "브라질");
+	init_city_info(&c[11], 5, 216, 5, 218, 5, 219, 32);
+
+	strcpy_s(c[12].name, sizeof(c[12].name), "미국");
+	init_city_info(&c[12], 6, 211, 5, 213, 5, 214, 36);
+
+	strcpy_s(c[13].name, sizeof(c[13].name), "캐나다");
+	init_city_info(&c[13], 5, 206, 5, 208, 5, 209, 40);
+
+	strcpy_s(c[14].name, sizeof(c[14].name), "사회복지기금");
+	init_city_info(&c[14], 2, 202, 5, 203, 5, 204, 0);
+
+	strcpy_s(c[15].name, sizeof(c[15].name), "스위스");
+	init_city_info(&c[15], 19, 201, 19, 203, 19, 204, 43);
+
+	strcpy_s(c[16].name, sizeof(c[16].name), "네덜란드");
+	init_city_info(&c[16], 32, 201, 33, 203, 33, 204, 48);
+
+	strcpy_s(c[17].name, sizeof(c[17].name), "§찬스§");
+	init_city_info(&c[17], 46, 202, 47, 203, 47, 204, 0);
+
+	strcpy_s(c[18].name, sizeof(c[18].name), "독일");
+	init_city_info(&c[18], 62, 201, 61, 203, 61, 204, 52);
+
+	strcpy_s(c[19].name, sizeof(c[19].name), "포루투갈");
+	init_city_info(&c[19], 74, 201, 75, 203, 75, 204, 56);
+
+	strcpy_s(c[20].name, sizeof(c[20].name), "스페인");
+	init_city_info(&c[20], 89, 201, 89, 203, 89, 204, 60);
+
+	strcpy_s(c[21].name, sizeof(c[21].name), "★우주여행★");
+	init_city_info(&c[21], 100, 202, 103, 203, 103, 204, 0);
+
+	strcpy_s(c[22].name, sizeof(c[22].name), "영국");
+	init_city_info(&c[22], 104, 206, 103, 208, 103, 209, 64);
+
+	strcpy_s(c[23].name, sizeof(c[23].name), "이탈리아");
+	init_city_info(&c[23], 102, 211, 103, 213, 103, 214, 68);
+
+	strcpy_s(c[24].name, sizeof(c[24].name), "§찬스§");
+	init_city_info(&c[24], 102, 217, 103, 218, 103, 219, 0);
+
+	strcpy_s(c[25].name, sizeof(c[25].name), "일본");
+	init_city_info(&c[25], 104, 221, 103, 223, 103, 224, 72);
+
+	strcpy_s(c[26].name, sizeof(c[26].name), "사회복지기금");
+	init_city_info(&c[26], 100, 226, 103, 228, 103, 229, 76);
+
+	strcpy_s(c[27].name, sizeof(c[27].name), "대한민국");
+	init_city_info(&c[27], 102, 231, 103, 233, 103, 234, 80);
+
+
+	gotoXY(5, 19);
+	printf("플레이어1의 이름을 입력하세요:");             
+	scanf_s("%s", p[0].name, sizeof(p[0].name));         //플레이어 1의 이름을 입력받음
+	gotoXY(5, 22);
+	printf("플레이어2의 이름을 입력하세요:");
+	scanf_s("%s", p[1].name, sizeof(p[1].name));         //플레이어 2의 이름을 입력받음
+	gotoXY(0, 45);
+
+
+	init_player_info(&p[0], BLUE);
+	init_player_info(&p[1], RED);
+	printf("=================================================================================================================\n\n");
+	textcolor(darkSkyBlue); printf("                                                부루마블 게임 시작!                                              \n\n");
+	textcolor(RED); printf("                                            재산이 0이 되면 패배합니다                                           \n\n");
+	textcolor(WHITE); printf("=================================================================================================================\n\n");
+
+	printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+	char tmp[10];
+	printf("아무키나 입력하세요 >> ");
+	scanf_s("%s", &tmp, sizeof(tmp));
+	gotoXY(0, 90);
+	printf("=================================================================================================================\n\n");
+	textcolor(DarkYellow); printf("                                             ****게임 순서를 정합니다****                                        \n\n");
+	textcolor(WHITE); printf("                                            아무키를 눌러 주사위를 던지세요                                      \n\n");
+	textcolor(darkSkyBlue); printf("                                        높은 숫자가 나온 사람이 먼저 시작합니다!!                                          \n\n");
+	textcolor(WHITE); printf("=================================================================================================================\n\n");
+
+	int start_a;          //순서를 정하는 주사위
+	int start_b;
+
+	while (1) {                //순서를 정하는 무한루프
+		start_a = Dice();
+		start_b = Dice();
+
+		gotoXY(50, 120);
+		textcolor(p[0].color); printf("%s님 : ", p[0].name); textcolor(WHITE);
+		scanf_s("%s", &tmp, sizeof(tmp));
+		gotoXY(50, 123);
+		printf("결과 >>  %d", start_a);
+		gotoXY(0, 124);
+		print_shape_dice(start_a, 10, 118);
+		gotoXY(50, 128);
+		textcolor(p[1].color); printf("%s님 : ", p[1].name); textcolor(WHITE);
+		scanf_s("%s", &tmp, sizeof(tmp));
+		gotoXY(50, 131);
+		printf("결과 >>  %d", start_b);
+		gotoXY(0, 133);
+		print_shape_dice(start_b, 10, 128);
+
+
+		gotoXY(46, 138);
+		if (start_a > start_b) {               //플레이어a가 b보다 크면
+			printf("===================================");
+			gotoXY(50, 140);
+			textcolor(p[0].color); printf("%s ", p[0].name); textcolor(WHITE);
+			printf("님이 먼저 시작합니다!!             ");
+			gotoXY(46, 142);
+			printf("===================================");
+			break;                             //무한루프를 빠져나감
+		}
+		else if (start_a < start_b) {         //플레이어b가 a보다 크면
+			printf("===================================");
+			gotoXY(50, 140);
+			textcolor(p[1].color); printf("%s ", p[1].name); textcolor(WHITE);
+			printf("님이 먼저 시작합니다!!             ");
+			gotoXY(46, 142);
+			printf("===================================");
+			break;                           //무한루프를 빠져나감
+		}
+		else {                          //a와 b가 같으면 루프를 다시 실행
+			printf("=======================================");
+			gotoXY(50, 140);
+			textcolor(DarkYellow); printf("같은 숫자가 나와, 다시 던집니다!!"); textcolor(WHITE);
+			gotoXY(46, 142);
+			printf("=======================================");
+		}
+
+	}
+
+	printf("\n\n\n아무키나 입력하세요 >> ");
+	scanf_s("%s", &tmp, sizeof(tmp));
+	gotoXY(0, 200);
+
+	create_board();             //게임판 생성
+
+	int m;             
+	int turn = 0;              //진행된 턴 수 0으로 초기화
+
+	if (start_a > start_b) {        //a가 b보다 컸을때 m = 0 으로 초기화
+		m = 0;
+	}
+	else                           //a가 b보다 컸을때 m = 1 으로 초기화
+		m = 1;
+
+	while (1) {                //한 플레이어의 턴 무한루프 (한 턴에 한번의 루프를 돈다)
+		print_money(&p[0], &p[1], 20, 207);
+		print_land(&p[0], &p[1], 20, 231);
+
+		gotoXY(c[14].building1_coord_x - 1, c[14].building1_coord_y);
+		printf("           ");
+		gotoXY(c[14].building1_coord_x - 1, c[14].building1_coord_y);
+		textcolor(GREEN); printf("누적:%d만원", donation); textcolor(WHITE);
+
+
+		textcolor(darkSkyBlue);
+		gotoXY(88, 206);
+		printf("┌───────┐");
+		gotoXY(88, 207);
+		printf("│       │");
+		gotoXY(91, 207);
+		printf("%d 턴", turn / 2 + 1);        //진행된 턴 수 출력
+		gotoXY(88, 208);
+		printf("└───────┘");
+		textcolor(WHITE);
+
+		gotoXY(c[p[0].pos_index].player1_coord_x, c[p[0].pos_index].player1_coord_y);   //플레이어 0의 말 위치
+		textcolor(p[0].color); printf("♥"); textcolor(WHITE);
+		gotoXY(c[p[1].pos_index].player2_coord_x, c[p[1].pos_index].player2_coord_y);   //플레이어 1의 말 위치
+		textcolor(p[1].color); printf("♥"); textcolor(WHITE);
+
+		int before_pos_index = p[m].pos_index;           //이전 위치 인덱스를 임시 저장
+
+		if (p[m].island_count > 1) {               //플레이어가 무인도에 있다면
+			p[m].island_count--;
+			p[m].double_count = 0;
+			gotoXY(35, 213);
+			printf("====================================================");
+			gotoXY(38, 215);
+			printf("                                                        ");
+			gotoXY(40, 215);
+			textcolor(p[m].color); printf("	%s", p[m].name); textcolor(WHITE);
+			printf("님이 "); textcolor(DarkGray); printf("무인도에 갇혔습니다...  "); textcolor(WHITE);
+			gotoXY(45, 217);
+			printf("                                                        ");
+			gotoXY(45, 217);
+			textcolor(YELLOW); printf("       %d턴 뒤에 탈출 가능!!      ", p[m].island_count); textcolor(WHITE);
+			gotoXY(35, 219);
+			printf("====================================================");
+			gotoXY(39, 221);
+			printf("                                      ");
+			gotoXY(39, 221);
+			printf(">> ");
+			scanf_s("%s", &tmp, sizeof(tmp));
+		}
+		else {                             //플레이어가 무인도에 있지 않고, 더블이라면
+			if (p[m].double_count == 1) {
+				p[m].double_count--;
+				gotoXY(46, 215);
+				printf("                                             ");
+				gotoXY(38, 215);
+				textcolor(SkyBlue); printf("더블이 나왔습니다! 한번 더 주사위를 던지세요."); textcolor(WHITE);
+				gotoXY(45, 217);
+				textcolor(YELLOW); printf("아무 키를 눌러 주사위를 던지세요!        "); textcolor(WHITE);
+				gotoXY(39, 221);
+				printf(">> ");
+				scanf_s("%s", &tmp, sizeof(tmp));
+			}
+
+			else {             //플레이어가 무인도에 있지 않고, 더블도 아닐 때
+
+
+				gotoXY(35, 213);
+				printf("====================================================");
+				gotoXY(38, 215);
+				printf("                                                        ");
+				gotoXY(46, 215);
+				textcolor(p[m].color); printf("	  %s", p[m].name); textcolor(WHITE);
+				printf("님의 차례입니다");
+				gotoXY(45, 217);
+				printf("                                                        ");
+				gotoXY(45, 217);
+				textcolor(YELLOW); printf("아무 키를 눌러 주사위를 던지세요!         "); textcolor(WHITE);
+				gotoXY(35, 219);
+				printf("====================================================");
+
+
+				gotoXY(39, 221);
+				printf("                                      ");
+				gotoXY(39, 221);
+				printf(">> ");
+				scanf_s("%s", &tmp, sizeof(tmp));
+			}
+
+			dice_1 = Dice();               //주사위 1
+			dice_2 = Dice();               //주사위 2
+			int result = dice_1 + dice_2;           //결과
+
+			print_shape_dice(dice_1, 60, 224);
+			print_shape_dice(dice_2, 79, 224);
+			gotoXY(61, 233);
+			printf("결과 >> ");
+			textcolor(PURPLE); printf("    ");
+			gotoXY(70, 233); printf("%d", result); textcolor(WHITE);
+
+
+			if (m == 0) {
+
+				gotoXY(c[before_pos_index].player1_coord_x, c[before_pos_index].player1_coord_y);      //이전 위치 잔상제거
+				printf("  ");
+				p[m].pos_index = (p[m].pos_index + result) % BOARD_LAND;
+				if (before_pos_index > p[m].pos_index)p[m].money = p[m].money + 30;         //시작지점을 지났을 때 월급 30만원
+				gotoXY(c[p[m].pos_index].player1_coord_x, c[p[m].pos_index].player1_coord_y);
+				textcolor(p[m].color); printf("♥"); textcolor(WHITE);          //현재위치에 플레이어 말 출력
+			}
+			else {
+				gotoXY(c[before_pos_index].player2_coord_x, c[before_pos_index].player2_coord_y);      //이전 위치 잔상제거
+				printf("  ");
+				p[m].pos_index = (p[m].pos_index + result) % BOARD_LAND;
+				if (before_pos_index > p[m].pos_index)p[m].money = p[m].money + 30;        //시작지점을 지났을 때 월급 30만원
+				gotoXY(c[p[m].pos_index].player2_coord_x, c[p[m].pos_index].player2_coord_y);
+				textcolor(p[m].color); printf("♥"); textcolor(WHITE);          //현재위치에 플레이어 말 출력
+			}
+
+			int tmp_pos_index = p[m].pos_index;       //현재위치 인덱스 저장
+
+			switch (tmp_pos_index) {
+			case 3:case 10:case 17:case 24: {       //찬스에 도착 했을 때
+				clear(114, 201);
+				int chance = rand() % 4;           //4개의 찬스중에서
+
+				gotoXY(36, 215);
+				printf("                                           ");
+				gotoXY(46, 215);
+				printf("            §찬스§                       ");
+
+				switch (chance) {
+				case 0:                  //첫 번째 찬스
+
+					gotoXY(45, 217);
+					textcolor(RED); printf("★ 복권에 당첨되었습니다!! ★   + 150만원   "); textcolor(WHITE);
+					gotoXY(39, 221);
+					printf("                                      ");
+					p[m].money = p[m].money + 150;
+					print_money(&p[0], &p[1], 20, 207);
+					gotoXY(39, 221);
+					printf(">> ");
+					scanf_s("%s", &tmp, sizeof(tmp));
+					break;
+
+				case 1:                     //두 번째 찬스
+					gotoXY(45, 217);
+					textcolor(RED); printf("☆ 경품에 당첨되었습니다!! ☆   + 50만원    "); textcolor(WHITE);
+					gotoXY(39, 221);
+					printf("                                      ");
+					p[m].money = p[m].money + 50;
+					print_money(&p[0], &p[1], 20, 207);
+					gotoXY(39, 221);
+					printf(">> ");
+					scanf_s("%s", &tmp, sizeof(tmp));
+					break;
+
+				case 2:                    //세 번째 찬스
+					gotoXY(45, 217);
+					textcolor(DarkRed); printf(" 교통사고를 당했습니다...   - 50만원   "); textcolor(WHITE);
+					gotoXY(39, 221);
+					printf("                                      ");
+					p[m].money = p[m].money - 50;
+					print_money(&p[0], &p[1], 20, 207);
+					gotoXY(39, 221);
+					printf(">> ");
+					scanf_s("%s", &tmp, sizeof(tmp));
+					is_bankrupt(&p[0], &p[1], turn);
+					break;
+
+				default:               //네 번째 찬스
+					gotoXY(45, 217);
+					textcolor(DarkGreen); printf(" 시작 지점으로 이동합니다.               "); textcolor(WHITE);
+					gotoXY(39, 221);
+					printf("                                      ");
+
+					before_pos_index = p[m].pos_index;
+					if (m == 0) {
+						gotoXY(c[before_pos_index].player1_coord_x, c[before_pos_index].player1_coord_y);
+						printf("  ");
+					}
+					else {
+						gotoXY(c[before_pos_index].player2_coord_x, c[before_pos_index].player2_coord_y);
+						printf("  ");
+					}
+					p[m].pos_index = 0;
+					gotoXY(39, 221);
+					printf(">> ");
+					scanf_s("%s", &tmp, sizeof(tmp));
+					break;
+				}
+
+			}
+			case 0:               //시작지점에 도착했을 때
+				break;
+			case 7: {             //무인도에 도착했을 때
+				p[m].island_count = 3;            //플레이어의 island_count를 3으로 초기화
+				p[m].double_count = 0;            //플레이어의 double_count를 0으로 초기화
+
+				gotoXY(35, 213);
+				printf("====================================================");
+				gotoXY(38, 215);
+				printf("                                                        ");
+				gotoXY(40, 215);
+				textcolor(p[m].color); printf("	%s", p[m].name); textcolor(WHITE);
+				printf("님이 "); textcolor(DarkGray); printf("무인도에 갇혔습니다...  "); textcolor(WHITE);
+				gotoXY(45, 217);
+				printf("                                                        ");
+				gotoXY(45, 217);
+				textcolor(YELLOW); printf("       %d턴 뒤에 탈출 가능!!      ", p[m].island_count); textcolor(WHITE);
+				gotoXY(35, 219);
+				printf("====================================================");
+				gotoXY(39, 221);
+				printf("                                      ");
+				gotoXY(39, 221);
+				printf(">> ");
+				scanf_s("%s", &tmp, sizeof(tmp));
+				break;
+			}
+
+			case 21: {             //우주여행에 도착 했을 때
+				int togo;
+				clear(114, 201);
+				gotoXY(45, 217);
+				textcolor(SkyBlue); printf("★우주여행★ 에 당첨되었습니다!!            "); textcolor(WHITE);
+				while (1) {
+					gotoXY(114, 208);
+					textcolor(YELLOW); printf("반드시 정수로 입력!!"); textcolor(WHITE);
+					gotoXY(114, 210);
+					printf("시작(0) ~ 대한민국(27)");    
+					gotoXY(114, 207);
+					printf("                                        ");
+					gotoXY(114, 207);
+					printf("원하는 지역을 선택하세요 >> ");
+					scanf_s("%d", &togo, sizeof(choice));      //정수를 입력받아 위치로 이동
+
+
+
+					if (togo < 0 || togo>27) {    //올바른 범위의 위치값이 아닐 때
+						gotoXY(114, 212);
+						printf("                                        ");
+						gotoXY(114, 212);
+						textcolor(YELLOW); printf("올바르지 않습니다. 다시 입력해주세요!!    "); textcolor(WHITE);
+						continue;         
+					}
+
+					before_pos_index = p[m].pos_index;
+
+					if (m == 0) {
+
+						gotoXY(c[before_pos_index].player1_coord_x, c[before_pos_index].player1_coord_y);
+						printf("  ");
+						p[m].pos_index = togo;
+						if (before_pos_index > p[m].pos_index)p[m].money = p[m].money + 30;
+						gotoXY(c[p[m].pos_index].player1_coord_x, c[p[m].pos_index].player1_coord_y);
+						textcolor(p[m].color); printf("♥"); textcolor(WHITE);
+					}
+					else {
+						gotoXY(c[before_pos_index].player2_coord_x, c[before_pos_index].player2_coord_y);
+						printf("  ");
+						p[m].pos_index = togo;
+						if (before_pos_index > p[m].pos_index)p[m].money = p[m].money + 30;
+						gotoXY(c[p[m].pos_index].player2_coord_x, c[p[m].pos_index].player2_coord_y);
+						textcolor(p[m].color); printf("♥"); textcolor(WHITE);
+					}
+					break;
+				}
+				break;
+			}
+
+			case 14: {                //사회복지기금(수령)에 도착했을 때
+				clear(114, 201);
+				gotoXY(45, 217);
+				textcolor(SkyBlue); printf("기부금을 획득하였습니다!!   + %d만원    ", donation); textcolor(WHITE);
+				gotoXY(39, 221);
+				printf("                                      ");
+				p[m].money = p[m].money + donation;       //기부금만큼 돈을 획득
+				donation = 0;
+				print_money(&p[0], &p[1], 20, 207);
+
+				gotoXY(39, 221);
+				printf(">> ");
+				scanf_s("%s", &tmp, sizeof(tmp));
+				break;
+			}
+
+			case 26: {              //사회복지기금(기부)에 도착했을 때
+				clear(114, 201);
+				gotoXY(45, 217);
+				textcolor(DarkGreen); printf("사회복지기금을 지불해야 합니다. - 15만원    "); textcolor(WHITE);
+				gotoXY(39, 221);
+				printf("                                      ");
+				p[m].money = p[m].money - 15;               //15만원 만큼 지불
+				donation += 15;
+				print_money(&p[0], &p[1], 20, 207);
+				is_bankrupt(&p[0], &p[1], turn);
+
+				gotoXY(39, 221);
+				printf(">> ");
+				scanf_s("%s", &tmp, sizeof(tmp));
+				break;
+			}
+
+			default: {             //이 외에 땅과 건물을 구입할 수 있는 땅에 도착했을 때
+				clear(114, 201);
+				if ((c[p[m].pos_index].land_own == (m + 1) % 2)) {      //상대방이 소유한 땅에 도착한 경우
+					gotoXY(45, 217);
+					textcolor(DarkRed); printf(" 통행료를 지불해야 합니다! (%d 만원)  ", c[p[m].pos_index].expense + c[p[m].pos_index].building_ev * c[p[m].pos_index].expense); textcolor(WHITE);
+					gotoXY(39, 221);
+					printf("                                      ");
+					p[m].money = p[m].money - c[p[m].pos_index].expense - c[p[m].pos_index].building_ev * c[p[m].pos_index].expense;
+					p[(m + 1) % 2].money = p[(m + 1) % 2].money + c[p[m].pos_index].expense + c[p[m].pos_index].building_ev * c[p[m].pos_index].expense;   //땅과 건물 만큼 통행료 지불
+					print_money(&p[0], &p[1], 20, 207);
+					gotoXY(39, 221);
+					printf(">> ");
+					scanf_s("%s", &tmp, sizeof(tmp));
+					is_bankrupt(&p[0], &p[1], turn);
+				}
+				else {               //빈 땅에 도착했을 때
+					while (1) {
+						gotoXY(114, 201);
+						printf("                                        ");
+						gotoXY(114, 201);
+						printf("땅 구입하기(1번):");
+
+						gotoXY(114, 202);
+						printf("                                        ");
+						gotoXY(114, 202);
+						printf("건물 구입하기(2번):");
+
+						gotoXY(114, 203);
+						printf("                                        ");
+						gotoXY(114, 203);
+						printf("턴을 종료하기(3번):");
+
+						gotoXY(114, 207);
+						printf("                                        ");
+						gotoXY(114, 207);
+						printf("선택하세요 >> ");
+						scanf_s("%s", &choice, sizeof(choice));     //행동 선택
+
+						if (strcmp(choice, "1") == 0) {             //땅을 구입하는 행동을 선택했을 때
+							if (c[p[m].pos_index].land_own == m) {      //땅을 보유 중일 때
+								gotoXY(114, 210);
+								printf("                                       ");
+								gotoXY(114, 210);
+								textcolor(YELLOW); printf("이미 보유중인 땅 입니다.                  "); textcolor(WHITE);
+							}
+							else if (p[m].money <= c[p[m].pos_index].expense) {       //금액이 부족할 때
+								gotoXY(114, 210);
+								printf("                                      ");
+								gotoXY(114, 210);
+								textcolor(YELLOW); printf("금액이 부족하여 땅을 구매할 수 없습니다."); textcolor(WHITE);
+							}
+							else {
+								p[m].money = p[m].money - c[p[m].pos_index].expense;    //금액을 지불하고
+								c[p[m].pos_index].land_own = m;                         //땅을 구입
+								print_money(&p[0], &p[1], 20, 207);
+								print_land(&p[0], &p[1], 20, 231);
+								gotoXY(c[p[m].pos_index].name_coord_x, c[p[m].pos_index].name_coord_y);
+								textcolor(p[m].color); printf("%s", c[p[m].pos_index].name); textcolor(WHITE);
+								gotoXY(114, 215);
+								textcolor(GREEN); printf("땅 구입을 완료했습니다!!    "); textcolor(WHITE);
+								p[m].land += 1;
+
+							}
+						}
+						else if ((strcmp(choice, "2") == 0)) {      //건물을 구입하는 행동을 선택했을 때
+							if (c[p[m].pos_index].land_own == -1) {       //땅을 보유하고 있지 않다면
+								gotoXY(114, 210);
+								printf("                                       ");
+								gotoXY(114, 210);
+								textcolor(YELLOW); printf("땅을 먼저 구입해야 합니다.     "); textcolor(WHITE);
+							}
+							else {
+								gotoXY(114, 203);
+								printf("                                           ");
+								gotoXY(114, 203);
+								printf("몇 개의 건물을 구입하시겠습니까? (1~3개)");
+								gotoXY(114, 207);
+								printf("                                          ");
+								gotoXY(114, 207);
+								printf("선택하세요 >> ");           
+								scanf_s("%s", &choice, sizeof(choice));        //구입할 건물수 선택
+
+								if (strcmp(choice, "1") == 0) {               //1개의 건물을 구입 할 때
+									if (c[p[m].pos_index].building_ev == 3) {      //이미 3개의 건물이 지어져있다면
+										gotoXY(114, 210);
+										printf("                                           ");
+										gotoXY(114, 210);
+										textcolor(YELLOW); printf("더 이상 건물을 구입할 수 없습니다.  "); textcolor(WHITE);
+										gotoXY(114, 215);
+										printf("                                           ");
+									}
+									if (p[m].money <= c[p[m].pos_index].expense) {    //금액이 부족할 때
+										gotoXY(114, 210);
+										printf("                                           ");
+										gotoXY(114, 210);
+										textcolor(YELLOW); printf("금액이 부족하여 건물을 구매할 수 없습니다. "); textcolor(WHITE);
+										gotoXY(114, 215);
+										printf("                                           ");
+									}
+									else {
+										int bc = c[p[m].pos_index].building_ev;
+										switch (bc) {
+										case 0:        //건물이 하나도 없는 땅이였을 때
+											p[m].money = p[m].money - c[p[m].pos_index].expense;
+											print_money(&p[0], &p[1], 20, 207);
+											print_land(&p[0], &p[1], 20, 231);
+											c[p[m].pos_index].building_ev += 1;
+											gotoXY(c[p[m].pos_index].building1_coord_x, c[p[m].pos_index].building1_coord_y);
+											textcolor(p[m].color); printf("■"); textcolor(WHITE);
+											gotoXY(114, 215);
+											textcolor(GREEN); printf("건물 구입을 완료했습니다!    "); textcolor(WHITE);
+											break;
+										case 1:          //이미 1개의 건물이 지어져있을 때
+											p[m].money = p[m].money - c[p[m].pos_index].expense;
+											print_money(&p[0], &p[1], 20, 207);
+											print_land(&p[0], &p[1], 20, 231);
+											c[p[m].pos_index].building_ev += 1;
+											gotoXY(c[p[m].pos_index].building2_coord_x, c[p[m].pos_index].building2_coord_y);
+											textcolor(p[m].color); printf("■"); textcolor(WHITE);
+											gotoXY(114, 215);
+											textcolor(GREEN); printf("건물 구입을 완료했습니다!   "); textcolor(WHITE);
+											break;
+										case 2:          //이미 2개의 건물이 지어져있을 때
+											p[m].money = p[m].money - c[p[m].pos_index].expense;
+											print_money(&p[0], &p[1], 20, 207);
+											print_land(&p[0], &p[1], 20, 231);
+											c[p[m].pos_index].building_ev += 1;
+											gotoXY(c[p[m].pos_index].building3_coord_x, c[p[m].pos_index].building3_coord_y);
+											textcolor(p[m].color); printf("■"); textcolor(WHITE);
+											gotoXY(114, 215);
+											textcolor(GREEN); printf("구입을 완료했습니다!          "); textcolor(WHITE);
+											break;
+										}
+
+
+									}
+								}
+								else if (strcmp(choice, "2") == 0) {    //2개의 건물을 구입할 때
+									if (c[p[m].pos_index].building_ev >= 2) {      //이미 2개 이상의 건물이 지어져있다면
+										gotoXY(114, 210);
+										printf("                                         ");
+										gotoXY(114, 210);
+										textcolor(YELLOW); printf("더 이상 건물을 구입할 수 없습니다.   "); textcolor(WHITE);
+										gotoXY(114, 215);
+										printf("                                         ");
+									}
+									if (p[m].money <= c[p[m].pos_index].expense * 2) {      //금액이 부족할 때
+										gotoXY(114, 210);
+										printf("                                         ");
+										gotoXY(114, 210);
+										textcolor(YELLOW); printf("금액이 부족하여 건물을 구매할 수 없습니다."); textcolor(WHITE);
+										gotoXY(114, 215);
+										printf("                                         ");
+									}
+									else {
+										int bc = c[p[m].pos_index].building_ev;
+										switch (bc) {
+										case 0:              //건물이 하나도 없는 땅이였을 때
+											p[m].money = p[m].money - c[p[m].pos_index].expense * 2;
+											print_money(&p[0], &p[1], 20, 207);
+											print_land(&p[0], &p[1], 20, 231);
+											c[p[m].pos_index].building_ev += 2;
+											gotoXY(c[p[m].pos_index].building1_coord_x, c[p[m].pos_index].building1_coord_y);
+											textcolor(p[m].color); printf("■"); textcolor(WHITE);
+											gotoXY(c[p[m].pos_index].building2_coord_x, c[p[m].pos_index].building2_coord_y);
+											textcolor(p[m].color); printf("■"); textcolor(WHITE);
+											gotoXY(114, 215);
+											textcolor(GREEN); printf("건물 구입을 완료했습니다!    "); textcolor(WHITE);
+											break;
+										case 1:             //이미 1개의 건물이 지어져있을 때
+											p[m].money = p[m].money - c[p[m].pos_index].expense * 2;
+											print_money(&p[0], &p[1], 20, 207);
+											print_land(&p[0], &p[1], 20, 231);
+											c[p[m].pos_index].building_ev += 2;
+											gotoXY(c[p[m].pos_index].building2_coord_x, c[p[m].pos_index].building2_coord_y);
+											textcolor(p[m].color); printf("■"); textcolor(WHITE);
+											gotoXY(c[p[m].pos_index].building3_coord_x, c[p[m].pos_index].building3_coord_y);
+											textcolor(p[m].color); printf("■"); textcolor(WHITE);
+											gotoXY(114, 215);
+											textcolor(GREEN); printf("건물 구입을 완료했습니다!    "); textcolor(WHITE);
+											break;
+										}
+
+
+									}
+								}
+								else if (strcmp(choice, "3") == 0) {           //3개의 건물을 구입할 때
+									if (c[p[m].pos_index].building_ev >= 1) {         //이미 1개 이상의 건물이 지어져있다면
+										gotoXY(114, 210); 
+										printf("                                         ");
+										gotoXY(114, 210);
+										textcolor(YELLOW); printf("더 이상 건물을 구입할 수 없습니다. "); textcolor(WHITE);
+										gotoXY(114, 215);
+										printf("                                         ");
+									}
+									if (p[m].money <= c[p[m].pos_index].expense * 3) {      //금액이 부족할 때
+										gotoXY(114, 210);
+										printf("                                         ");
+										gotoXY(114, 210);
+										textcolor(YELLOW); printf("금액이 부족하여 건물을 구매할 수 없습니다."); textcolor(WHITE);
+										gotoXY(114, 215);
+										printf("                                         ");
+									}
+									else {
+										int bc = c[p[m].pos_index].building_ev;
+										switch (bc) {
+										case 0:              //건물이 하나도 없는 땅이였을 때
+											p[m].money = p[m].money - c[p[m].pos_index].expense * 3;
+											print_money(&p[0], &p[1], 20, 207);
+											print_land(&p[0], &p[1], 20, 231);
+											c[p[m].pos_index].building_ev += 3;
+											gotoXY(c[p[m].pos_index].building1_coord_x, c[p[m].pos_index].building1_coord_y);
+											textcolor(p[m].color); printf("■"); textcolor(WHITE);
+											gotoXY(c[p[m].pos_index].building2_coord_x, c[p[m].pos_index].building2_coord_y);
+											textcolor(p[m].color); printf("■"); textcolor(WHITE);
+											gotoXY(c[p[m].pos_index].building3_coord_x, c[p[m].pos_index].building3_coord_y);
+											textcolor(p[m].color); printf("■"); textcolor(WHITE);
+											gotoXY(114, 215);
+											textcolor(GREEN); printf("건물 구입을 완료했습니다!    "); textcolor(WHITE);
+											break;
+										}
+									}
+								}
+							}
+
+						}
+						else if ((strcmp(choice, "3") == 0)) {     //턴을 종료하는 행동을 선택 했을 때
+							clear(114, 201);
+							break;
+						}
+						else {                // 1 ~ 3 이외의 행동을 선택 했을 때
+							gotoXY(114, 210);
+							printf("                                   ");   // 다시 선택
+							gotoXY(114, 210);
+							textcolor(YELLOW); printf("올바르지 않습니다. 다시 입력해주세요!!    "); textcolor(WHITE);
+						}
+					}
+				}
+			}
+
+
+
+
+			}
+		}
+
+		/*더블이 나왔을 때*/
+		if (is_double(dice_1, dice_2) == 1) {
+			p[m].double_count = 1;          //플레이어의 double_count를 1로 초기화
+		}
+
+		else {
+			m++;                //m을 1증가 시키고
+			m = m % 2;          //%2로 나머지 연산  (즉,m 은  0  1  0  1  0  1  0...  로 순환하게 됨)
+
+			turn++;           //진행된 턴수 1증가
+		}
+
+	}
+
+	return 0;
+}

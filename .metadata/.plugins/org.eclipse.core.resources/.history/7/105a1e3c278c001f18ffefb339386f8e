@@ -1,0 +1,218 @@
+package monopoly;
+
+public class Board {
+
+	public static void main(String[] args) {
+		void create_board(void) {         //게임판을 화면에 출력하는 함수
+			int i, j;
+			printf("┌");
+			for (i = 1; i < COLS; i++) {           
+				if (i % 14 == 0)
+					printf("┬");
+				else
+					printf("─");
+			}
+			printf("┐\n");
+			printf("│             │    스위스   │   네덜란드  │             │     독일    │   포루투갈  │    스페인   │             │\n");
+			printf("│ 사회복지기금│   (43만원)  │   (48만원)  │   §찬스§  │   (52만원)  │   (56만원)  │   (60만원)  │ ★우주여행★│\n");
+			for (j = 0; j < 2; j++) {
+				printf("│");
+				for (i = 1; i < COLS; i++) {
+					if (i % 14 == 0)
+						printf("│");
+					else
+						printf(" ");	    //1행
+				}
+				printf("│\n");
+			}
+			printf("├");
+			for (i = 1; i < COLS; i++) {
+				if (i == 14 || i == 98)
+					printf("┼");
+				else if (i % 14 == 0)
+					printf("┴");
+				else
+					printf("─");
+			}
+			printf("┤\n");
+
+
+			printf("│    캐나다   │");
+			for (i = 16; i <= 98; i++) {
+				printf(" ");
+			}
+			printf("│     영국    │\n");
+			printf("│   (40만원)  │");
+			for (i = 16; i <= 98; i++) {
+				printf(" ");
+			}
+			printf("│   (64만원)  │\n");          //2행
+
+			for (j = 0; j < 2; j++) {
+				printf("│             │");
+				for (i = 16; i <= 98; i++) {
+					printf(" ");
+				}
+				printf("│             │\n");
+			}
+			printf("├─────────────┤");
+			for (i = 16; i <= 98; i++) {
+				printf(" ");
+			}
+			printf("├─────────────┤\n");
+
+
+			printf("│     미국    │");
+			for (i = 16; i <= 98; i++) {
+				printf(" ");
+			}
+			printf("│   이탈리아  │\n");
+			printf("│   (36만원)  │");
+			for (i = 16; i <= 98; i++) {
+				printf(" ");
+			}
+			printf("│   (68만원)  │\n");         //3행
+			for (j = 0; j < 2; j++) {
+				printf("│             │");
+				for (i = 16; i <= 98; i++) {
+					printf(" ");
+				}
+				printf("│             │\n");
+			}
+			printf("├─────────────┤");
+			for (i = 16; i <= 98; i++) {
+				printf(" ");
+			}
+			printf("├─────────────┤\n");
+
+
+			printf("│    브라질   │");
+			for (i = 16; i <= 98; i++) {
+				printf(" ");
+			}
+			printf("│             │\n");
+			printf("│   (32만원)  │");
+			for (i = 16; i <= 98; i++) {
+				printf(" ");
+			}
+			printf("│   §찬스§  │\n");              //4행
+			for (j = 0; j < 2; j++) {
+				printf("│             │");
+				for (i = 16; i <= 98; i++) {
+					printf(" ");
+				}
+				printf("│             │\n");
+			}
+			printf("├─────────────┤");
+			for (i = 16; i <= 98; i++) {
+				printf(" ");
+			}
+			printf("├─────────────┤\n");
+
+
+			printf("│             │");
+			for (i = 16; i <= 98; i++) {
+				printf(" ");
+			}
+			printf("│     일본    │\n");
+			printf("│   §찬스§  │");
+			for (i = 16; i <= 98; i++) {
+				printf(" ");
+			}
+			printf("│   (72만원)  │\n");         //5행
+			for (j = 0; j < 2; j++) {
+				printf("│             │");
+				for (i = 16; i <= 98; i++) {
+					printf(" ");
+				}
+				printf("│             │\n");
+			}
+			printf("├─────────────┤");
+			for (i = 16; i <= 98; i++) {
+				printf(" ");
+			}
+			printf("├─────────────┤\n");
+
+
+			printf("│  아르헨티나 │");
+			for (i = 16; i <= 98; i++) {
+				printf(" ");
+			}
+			printf("│ 사회복지기금│\n");
+			printf("│   (28만원)  │");
+			for (i = 16; i <= 98; i++) {
+				printf(" ");
+			}
+			printf("│(15만원 기부)│\n");              //6행
+			for (j = 0; j < 2; j++) {
+				printf("│             │");
+				for (i = 16; i <= 98; i++) {
+					printf(" ");
+				}
+				printf("│             │\n");
+			}
+			printf("├─────────────┤");
+			for (i = 16; i <= 98; i++) {
+				printf(" ");
+			}
+			printf("├─────────────┤\n");
+
+
+			printf("│     칠레    │");
+			for (i = 16; i <= 98; i++) {
+				printf(" ");
+			}
+			printf("│   대한민국  │\n");
+			printf("│   (23만원)  │");
+			for (i = 16; i <= 98; i++) {
+				printf(" ");
+			}
+			printf("│   (80만원)  │\n");               //7행
+			for (j = 0; j < 2; j++) {
+				printf("│             │");
+				for (i = 16; i <= 98; i++) {
+					printf(" ");
+				}
+				printf("│             │\n");
+			}
+			printf("├─────────────┼");
+
+			for (i = 16; i <= 98; i++) {
+				if (i % 14 == 1)
+					printf("┬");
+				else
+					printf("─");
+			}
+			printf("┼─────────────┤\n");
+
+
+			printf("│  ☆무인도☆ │  인도네시아 │     대만    │   싱가포르  │             │    베트남   │    필리핀   │    ←시작   │\n");
+			printf("│             │   (20만원)  │   (18만원)  │   (15만원)  │   §찬스§  │   (12만원)  │   (10만원)  │             │\n");
+			for (j = 0; j < 2; j++) {
+				printf("│");
+				for (i = 1; i < COLS; i++) {             //8행
+					if (i % 14 == 0)
+						printf("│");
+					else
+						printf(" ");
+				}
+				printf("│\n");
+			}
+			printf("└");
+			for (i = 1; i < COLS; i++) {
+				if (i % 14 == 0) {
+					printf("┴");
+				}
+				else {
+					printf("─");
+				}
+			}
+			printf("┘\n");
+
+
+		}
+
+
+	}
+
+}

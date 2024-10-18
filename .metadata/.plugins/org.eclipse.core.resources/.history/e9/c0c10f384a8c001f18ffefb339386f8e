@@ -1,0 +1,17 @@
+package monopoly;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class HotelList {
+	
+	Hotel h = new Hotel();
+	//위치, String
+	Map<Integer, Hotel> map = new HashMap<>();
+	
+	
+	
+
+	
+	
+}

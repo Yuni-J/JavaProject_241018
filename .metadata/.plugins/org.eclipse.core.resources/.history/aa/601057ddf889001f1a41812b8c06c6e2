@@ -1,0 +1,9 @@
+package word_1014;
+
+public class WordList {
+	private int wordNum;
+	private List<Word> word = new ArrayList<>();
+	
+	
+
+}

@@ -1,0 +1,20 @@
+package monopoly;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class HotelList {
+	
+	
+	Map<String, Hotel> m = new HashMap<>();
+	
+	Hotel h = new Hotel();
+	
+	public void addHotel(String hotelName, Hotel hotel) {
+		m.put("타이페이", h.getHotelPo());
+	}
+	
+
+	
+	
+}

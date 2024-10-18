@@ -1,0 +1,11 @@
+package jdbc;
+
+public class ProductServiceImpl implements Service {
+
+	@Override
+	public int insert(Product p) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+}

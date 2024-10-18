@@ -1,0 +1,7 @@
+package jdbcStudent;
+
+public interface Service {
+
+	int insert(Student s);
+
+}

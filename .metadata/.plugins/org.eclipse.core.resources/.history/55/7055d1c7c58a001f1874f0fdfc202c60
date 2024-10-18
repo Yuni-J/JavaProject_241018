@@ -1,0 +1,26 @@
+package jdbc;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+
+public class ProductDAOImpl implements DAO {
+	/* DAO <-> DB */
+	
+	// DB 연결객체
+	private Connection conn;
+	// sql 구문은 실행시키는 기능을 가진 객체
+	private PreparedStatement pst;
+	// 쿼리문 저장 스트링
+	private String query = "";
+	
+	public ProductDAOImpl() {
+		// DBConnection class 생성(싱글톤) 연결
+		
+	}
+	
+	@Override
+	public int insert(Product p) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+}

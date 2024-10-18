@@ -1,0 +1,11 @@
+package word_1014;
+
+public class WordMain {
+
+	public static void main(String[] args) {
+		/* 단어장 프로그램
+		 * */
+
+	}
+
+}
